@@ -4,7 +4,15 @@
 	<h1>{{ program.title }}</h1>
 	<p>{{ program.synopsis }}</p>
 	<p>{{ program.category.name }}</p>
-
+	{% for season in seasons %}
+		<p>Le numéro de la saison est
+			{{ season.number }}</p>
+		<p>{{ season.description }}</p>
+		<a href="{{ path('program_season_show', { programId: program.id, seasonId: season.id }) }}">
+			En savoir plus la saison
+			{{ season.number }}
+		</a>
+	{% endfor %}
 	<a href="{{ path('program_home') }}">
 		Retour à la liste des programmes
 	</a>

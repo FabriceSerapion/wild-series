@@ -11,26 +11,27 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/category', name: 'category_')]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', methods: ['GET'], name: 'index')]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $category = $categoryRepository->findAll();
+        $categories = $categoryRepository->findAll();
         return $this->render('category/index.html.twig', [
-            'category' => $category,
+            'categories' => $categories,
         ]);
     }
 
-    // #[route('/{categoryName}', route_name: 'show')]
-    // public function show(string $categoryName, CategoryRepository $categoryRepository, ProgramRepository $programRepository)
-    // {
-    //     $category = $categoryRepository->findOneBy(['category_name' => $categoryName]);
+    #[Route('/{categoryName}', methods: ['GET'], name: 'show')]
+    public function show(string $categoryName, CategoryRepository $categoryRepository, ProgramRepository $programRepository)
+    {
+        $category = $categoryRepository->findOneBy(['name' => $categoryName]);
 
-    //     if (!$category) {
-    //         throw $this->createNotFoundException(
-    //             'No program found for this category : ' . $category
-    //         );
-    //     } else {
-    //         $program = $programRepository->findBy(['category_name' => $categoryName]);
-    //     }
-    // }
+        if (!$category) {
+            throw $this->createNotFoundException(
+                'No program found for this category : ' . $categoryName
+            );
+        } else {
+            $programs = $programRepository->findBy(['category' => $category->getId()], ['id' => 'DESC'], 3);
+        }
+        return $this->render('category/show.html.twig', ['category' => $category, 'programs' => $programs]);
+    }
 }
