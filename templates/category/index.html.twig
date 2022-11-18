@@ -7,8 +7,15 @@
 
 
 	<div class="example-wrapper">
-		{% for category in category %}
+		{% for category in categories %}
 			<h1>{{ category.name }}</h1>
+			<a href="{{ path("category_show", { categoryName: category.name }) }}">
+				Voir les programmes de cette catégorie
+			</a>
 		{% endfor %}
-	</div>
-{% endblock %}
+		Voir les programmes de cette catégorie
+	</a>
+	<a href="{{ path('program_home') }}">
+		Aller à la liste des programmes
+	</a>
+</div>{% endblock %}
