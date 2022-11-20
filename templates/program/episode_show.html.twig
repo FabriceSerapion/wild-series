@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div>
+		<h1>{{ episode.title }}</h1>
+		<h2>Episode
+			{{ episode.number }}</h2>
+		<p>{{ episode.synopsis }}</p>
+		<a href="{{ path('program_show', { id: program.id }) }}">
+			Retour arrière
+		</a>
+	</div>
+{% endblock %}

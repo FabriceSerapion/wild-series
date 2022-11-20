@@ -4,11 +4,11 @@
 	<h1>{{ program.title }}</h1>
 	<p>{{ program.synopsis }}</p>
 	<p>{{ program.category.name }}</p>
-	{% for season in seasons %}
+	{% for season in program.seasons %}
 		<p>Le numéro de la saison est
 			{{ season.number }}</p>
 		<p>{{ season.description }}</p>
-		<a href="{{ path('program_season_show', { programId: program.id, seasonId: season.id }) }}">
+		<a href="{{ path('program_season_show', { "program_id": program.id, "season_id": season.id }) }}">
 			En savoir plus la saison
 			{{ season.number }}
 		</a>
