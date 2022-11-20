@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +44,36 @@ class ProgramController extends AbstractController
   //   }
   //   return $this->render('show.html.twig', ['program' => $program, 'seasons' => $seasons]);
   // }
+
+  #[Route('/new', name: 'new')]
+  public function new(Request $request, ProgramRepository $programRepository): Response
+  {
+    $program = new Program();
+
+    $form = $this->createForm(ProgramType::class, $program);
+
+    $form->handleRequest($request);
+    // Was the form submitted ?
+    if ($form->isSubmitted()) {
+      // Deal with the submitted data
+      // For example : persiste & flush the entity
+      // And redirect to a route that display the result
+      $programRepository->save($program, true);
+      $programs = $programRepository->findAll();
+      return $this->render('index.html.twig', [
+        'programs' => $programs,
+      ]);
+    }
+
+    return $this->renderForm('program/new.html.twig', [
+      'form' => $form,
+    ]);
+
+    // Alternative render
+    // return $this->render('category/new.html.twig', [
+    //   'form' => $form->createView(),
+    // ]);
+  }
 
   // This route shows one program find by ID
   #[Route('/{id<^[0-9]+$>}', methods: ['GET'], name: 'show')]
