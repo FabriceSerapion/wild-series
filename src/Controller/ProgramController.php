@@ -54,15 +54,12 @@ class ProgramController extends AbstractController
 
     $form->handleRequest($request);
     // Was the form submitted ?
-    if ($form->isSubmitted()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       // Deal with the submitted data
       // For example : persiste & flush the entity
-      // And redirect to a route that display the result
       $programRepository->save($program, true);
-      $programs = $programRepository->findAll();
-      return $this->render('index.html.twig', [
-        'programs' => $programs,
-      ]);
+      // And redirect to a route that display the result
+      return $this->redirectToRoute('program_index');
     }
 
     return $this->renderForm('program/new.html.twig', [

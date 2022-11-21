@@ -36,12 +36,9 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted()) {
             // Deal with the submitted data
             // For example : persiste & flush the entity
-            // And redirect to a route that display the result
             $categoryRepository->save($category, true);
-            $categories = $categoryRepository->findAll();
-            return $this->render('category/index.html.twig', [
-                'categories' => $categories,
-            ]);
+            // And redirect to a route that display the result
+            return $this->redirectToRoute('category_index');
         }
 
         // Render the form (best practice)

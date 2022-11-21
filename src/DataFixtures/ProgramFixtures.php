@@ -18,7 +18,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 1; $i <= 50; $i++) {
             $program = new Program();
-            $program->setTitle($faker->sentence(rand(1,6)));
+            $program->setTitle($faker->sentence(rand(1, 6)));
             $program->setSynopsis($faker->paragraphs(2, true));
             $program->setYear(rand(1960, 2022));
             $program->setCountry([
@@ -26,11 +26,12 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                 'USA',
                 'Allemagne',
                 'Corée du Sud'
-            ][rand(0,3)]);
+            ][rand(0, 3)]);
             $program->setCategory($this->getReference(
-                'category_'.CategoryFixtures::CATEGORIES[rand(0,4)]));
+                'category_' . CategoryFixtures::CATEGORIES[rand(0, 4)]
+            ));
             $manager->persist($program);
-            $this->addReference('program_'.$i, $program);
+            $this->addReference('program_' . $i, $program);
         }
 
         $manager->flush();
@@ -39,7 +40,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return  [
-            CategoryFixtures::class
+            CategoryFixtures::class,
         ];
     }
 }
