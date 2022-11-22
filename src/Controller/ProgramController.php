@@ -59,7 +59,7 @@ class ProgramController extends AbstractController
       // For example : persiste & flush the entity
       $programRepository->save($program, true);
       // And redirect to a route that display the result
-      return $this->redirectToRoute('program_index');
+      return $this->redirectToRoute('program_home');
     }
 
     return $this->renderForm('program/new.html.twig', [

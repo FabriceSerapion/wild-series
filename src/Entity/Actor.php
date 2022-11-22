@@ -58,6 +58,12 @@ class Actor
         return $this;
     }
 
+    //specific selector to concat firstname and lastname
+    public function getSelector(): string
+    {
+        return $this->getFirstname() . ' ' . $this->getLastname();
+    }
+
     /**
      * @return Collection<int, Program>
      */

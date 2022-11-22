@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use App\Entity\Actor;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProgramType extends AbstractType
 {
@@ -22,7 +24,14 @@ class ProgramType extends AbstractType
             ->add('country', TextType::class)
             /** TODO: CHANGE DATE TYPE */
             ->add('year', IntegerType::class)
-            ->add('category', null, ['choice_label' => 'name']);
+            ->add('category', null, ['choice_label' => 'name'])
+            ->add('actors', EntityType::class, [
+                'class' => Actor::class,
+                'choice_label' => 'selector',
+                'by_reference' => false,
+                'multiple' => true,
+                'expanded' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
